@@ -1,0 +1,7 @@
+## Interface: 90200
+## Title: MountTrack
+## Notes: Displays an info box displaying current mounts being hunted.
+## Author: JoshDavidson
+## Version: 9.2.0
+
+MountTrack.lua
