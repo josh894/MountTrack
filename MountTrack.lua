@@ -67,7 +67,6 @@ function EditBox_Show(text)
         end)
         f:Show()
     end
-    
     if text then
         EditBoxEditBox:SetText(text)
     end
@@ -75,8 +74,15 @@ function EditBox_Show(text)
 end
 
 function Get_Mounts()
-    local numMounts = C_MountJournal.GetNumDisplayedMounts()
-    EditBox_Show(numMounts)
+    local mounts = {1486, 1487, 845}
+    local mountName = ""
+    for index = 1, 3 do
+        local name, __, __, __, __, __, __, __, __, __, isCollected, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
+        if isCollected == false then
+            mountName = mountName .. name .. "\n"
+        end
+    end
+    EditBox_Show(mountName)
 end
 
 SlashCmdList["MOUNT"] = Get_Mounts
