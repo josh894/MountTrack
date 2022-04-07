@@ -1,8 +1,62 @@
-SLASH_MOUNT1 = "/mounttrack"
-SLASH_MOUNT2 = "/mountT"
+local _, MountTrack = ...
 
--- Frame code largely adapted from https://www.wowinterface.com/forums/showpost.php?p=323901&postcount=2
-function EditBox_Show(text)
+--First WoW addon project!
+--Huge help from LibStub and Ace-3.0 Libraries
+--Meant for personal use, but feel free to use if you don't mind manually changing the mount table!
+
+
+--Initializes addon
+MountTrack = LibStub("AceAddon-3.0"):NewAddon(MountTrack, "Simulationcraft", "AceConsole-3.0", "AceEvent-3.0")
+
+--Creates a database for minimap tooltip
+MountDB = LibStub("LibDataBroker-1.1"):NewDataObject("MountTrack", {
+    type = "data source",
+    text = "MountTrack",
+    label = "MountTrack",
+    icon = "Interface\\AddOns\\MountTrack\\icon",
+    OnClick = function()
+        MountTrack:Get_Mounts()
+    end,
+    OnTooltipShow = function(tt)
+      tt:AddLine("MountTrack")
+      tt:AddLine(" ")
+      tt:AddLine("Click to show MountTrack window")
+    end
+  })
+
+LibDBIcon = LibStub("LibDBIcon-1.0")
+
+function MountTrack:OnInitialize()
+    self.db = LibStub("AceDB-3.0"):New("MountTrackDB", {
+        profile = {
+          minimap = {
+            hide = false,
+          },
+          frame = {
+            point = "CENTER",
+            relativeFrame = nil,
+            relativePoint = "CENTER",
+            ofsx = 0,
+            ofsy = 0,
+            width = 750,
+            height = 400,
+          },
+        },
+      });
+    LibDBIcon:Register("MountTrack", MountDB, self.db.profile.minimap)
+    MountTrack:UpdateMinimapButton()
+end
+
+
+function MountTrack:UpdateMinimapButton()
+      LibDBIcon:Show("MountTrack")
+end
+
+-- Editbox frame from https://www.wowinterface.com/forums/showpost.php?p=323901&postcount=2
+-- Used instead of default message box since so much cleaner
+-- Thanks to simulationcraft for allowing me to realize that this exists
+
+function MountTrack:EditBox_Show(text)
     if not EditBox then
         local f = CreateFrame("Frame", "EditBox", UIParent, "DialogBoxFrame")
         f:SetPoint("CENTER")
@@ -73,8 +127,9 @@ function EditBox_Show(text)
     EditBox:Show()
 end
 
-function Get_Mounts()
+function MountTrack:Get_Mounts()
     --list of mount IDs collected from https://www.wowhead.com/
+    --if someone is using this other than me, this is the list you change to display different mounts
     local mounts = {1332, 1185, 1182, 1203, 1205, 1200, 1486, 1436, 1491, 1497, 899, 971, 527}
     local mountlist = "Total Mounts: " .. C_MountJournal.GetNumDisplayedMounts() .. "\n\n"
 
@@ -90,7 +145,5 @@ function Get_Mounts()
             mountlist = mountlist .. ":     " .. source .. "\n\n"
         end
     end
-    EditBox_Show(mountlist)
+    MountTrack:EditBox_Show(mountlist)
 end
-
-SlashCmdList["MOUNT"] = Get_Mounts
