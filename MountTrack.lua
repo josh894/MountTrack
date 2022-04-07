@@ -74,15 +74,17 @@ function EditBox_Show(text)
 end
 
 function Get_Mounts()
-    local mounts = {1486, 1487, 845}
-    local mountName = ""
-    for index = 1, 3 do
+    local mounts = {1332, 1185, 1182, 1203, 1205, 1200, 1486, 1436, 1491, 1497, 899, 971, 527}
+    local mountlist = "" .. C_MountJournal.GetNumDisplayedMounts() .. "\n\n\n\n"
+    for index = 1, #mounts do
         local name, __, __, __, __, __, __, __, __, __, isCollected, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
+        local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
         if isCollected == false then
-            mountName = mountName .. name .. "\n"
+            mountlist = mountlist .. name
+            mountlist = mountlist .. ":     " .. source .. "\n\n"
         end
     end
-    EditBox_Show(mountName)
+    EditBox_Show(mountlist)
 end
 
 SlashCmdList["MOUNT"] = Get_Mounts
