@@ -1,9 +1,13 @@
 # MountTrack
 Personal use World of Warcraft addon to track specific mounts.
 
+## Dependencies
+-   Ace3, LibDBIcon
+-   These can both be found within the libs folder.
+
 ## Usage
 -   Install and unzip into `\World of Warcraft\_retail_\Interface\AddOns`
--   Once in game, list of mounts can be viewed by typing `/mounttrack` OR `/mountT` within the chat bar.
+-   Once in game, list of mounts can be viewed clicking on the minimap tooltip.
 
 ## Editing for own-use
 -   In Get_Mounts() the mount table is listed with mount IDs you wish to track.
