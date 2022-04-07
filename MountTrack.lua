@@ -74,11 +74,17 @@ function EditBox_Show(text)
 end
 
 function Get_Mounts()
+    --list of mount IDs collected from https://www.wowhead.com/
     local mounts = {1332, 1185, 1182, 1203, 1205, 1200, 1486, 1436, 1491, 1497, 899, 971, 527}
-    local mountlist = "" .. C_MountJournal.GetNumDisplayedMounts() .. "\n\n\n\n"
+    local mountlist = "Total Mounts: " .. C_MountJournal.GetNumDisplayedMounts() .. "\n\n"
+
+    --goes through entire list of mounts
     for index = 1, #mounts do
         local name, __, __, __, __, __, __, __, __, __, isCollected, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
         local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
+
+        --if the mount has been collected, it won't print to the edit box
+        --this removes the need to remove IDs from the list
         if isCollected == false then
             mountlist = mountlist .. name
             mountlist = mountlist .. ":     " .. source .. "\n\n"
