@@ -130,7 +130,7 @@ end
 function MountTrack:Get_Mounts()
     --list of mount IDs collected from https://www.wowhead.com/
     --if someone is using this other than me, this is the list you change to display different mounts
-    local mounts = {1332, 1185, 1182, 1203, 1205, 1200, 1486, 1436, 1491, 1497, 899, 971, 527}
+    local mounts = {264, 1332, 1185, 1182, 1203, 1205, 1200, 899, 971, 527}
     local mountlist = "Total Mounts: " .. C_MountJournal.GetNumDisplayedMounts() .. "\n\n"
 
     --goes through entire list of mounts
