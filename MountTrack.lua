@@ -43,6 +43,7 @@ function MountTrack:OnInitialize()
           },
         },
       });
+    MountTrack:RegisterChatCommand('MountT', 'ChatCommand')
     LibDBIcon:Register("MountTrack", MountDB, self.db.profile.minimap)
     MountTrack:UpdateMinimapButton()
 end
@@ -50,6 +51,19 @@ end
 
 function MountTrack:UpdateMinimapButton()
       LibDBIcon:Show("MountTrack")
+end
+
+function MountTrack:ChatCommand(text)
+    local mounts=C_MountJournal.GetMountIDs()
+    for index=1,#mounts do
+        local name, __, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
+        --CASE SENSITIVE
+        if name == text then
+            local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
+            local info = name .. ":     " .. source
+            MountTrack:EditBox_Show(info)
+        end
+    end
 end
 
 -- Editbox frame from https://www.wowinterface.com/forums/showpost.php?p=323901&postcount=2
