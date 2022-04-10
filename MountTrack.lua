@@ -57,8 +57,10 @@ function MountTrack:ChatCommand(text)
     local mounts=C_MountJournal.GetMountIDs()
     for index=1,#mounts do
         local name, __, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
-        --CASE SENSITIVE
-        if name == text then
+        --sets both to lowercase to remove case sensitivity
+        local lowerName = name:lower()
+        local lowertext = text:lower()
+        if lowerName == lowertext then
             local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
             local info = name .. ":     " .. source
             MountTrack:EditBox_Show(info)
