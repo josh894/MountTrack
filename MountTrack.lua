@@ -54,13 +54,11 @@ function MountTrack:UpdateMinimapButton()
 end
 
 function MountTrack:ChatCommand(text)
-    local mounts=C_MountJournal.GetMountIDs()
+    local mounts = C_MountJournal.GetMountIDs()
     for index=1,#mounts do
         local name, __, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
         --sets both to lowercase to remove case sensitivity
-        local lowerName = name:lower()
-        local lowertext = text:lower()
-        if lowerName == lowertext then
+        if name:lower() == text:lower() then
             local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
             local info = name .. ":     " .. source
             MountTrack:EditBox_Show(info)
@@ -145,20 +143,37 @@ end
 
 function MountTrack:Get_Mounts()
     --list of mount IDs collected from https://www.wowhead.com/
+    --UPDATED: You can now insert mounts by name as shown in the example below (Not Case-Sensitive)
     --if someone is using this other than me, this is the list you change to display different mounts
-    local mounts = {264, 1332, 1185, 1182, 1203, 1205, 1200, 899, 971, 527}
+    local mounts = {"Blue Proto-Drake", 1332, 1185, 1182, 1203, 1205, 1200, 899, 971, 527}
     local mountlist = "Total Mounts: " .. C_MountJournal.GetNumDisplayedMounts() .. "\n\n"
 
     --goes through entire list of mounts
     for index = 1, #mounts do
-        local name, __, __, __, __, __, __, __, __, __, isCollected, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
-        local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
-
-        --if the mount has been collected, it won't print to the edit box
-        --this removes the need to remove IDs from the list
-        if isCollected == false then
-            mountlist = mountlist .. name
-            mountlist = mountlist .. ":     " .. source .. "\n\n"
+        --if the mount ID is in table
+        if type(mounts[index]) == "number" then
+            local name, __, __, __, __, __, __, __, __, __, isCollected, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
+            --if the mount has been collected, it won't print to the edit box
+            --this removes the need to remove IDs from the list
+            if isCollected == false then
+                local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
+                mountlist = mountlist .. name
+                mountlist = mountlist .. ":     " .. source .. "\n\n"
+            end
+        --if the mount name is in table
+        elseif type(mounts[index]) == "string" then
+            local mountsAll = C_MountJournal.GetMountIDs()
+            for indexAll=1,#mountsAll do
+                local name, __, __, __, __, __, __, __, __, __, isCollected, __ = C_MountJournal.GetMountInfoByID(mountsAll[indexAll]) 
+                --sets both to lowercase to remove case sensitivity
+                if name:lower() == mounts[index]:lower() then
+                    local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mountsAll[indexAll])
+                    if isCollected == false then
+                        mountlist = mountlist .. name
+                        mountlist = mountlist .. ":     " .. source .. "\n\n"
+                    end
+                end
+            end
         end
     end
     MountTrack:EditBox_Show(mountlist)
