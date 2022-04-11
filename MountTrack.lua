@@ -55,14 +55,19 @@ end
 
 function MountTrack:ChatCommand(text)
     local mounts = C_MountJournal.GetMountIDs()
+    local check = false
     for index=1,#mounts do
         local name, __, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
         --sets both to lowercase to remove case sensitivity
         if name:lower() == text:lower() then
             local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
             local info = name .. ":     " .. source
+            check = true
             MountTrack:EditBox_Show(info)
         end
+    end
+    if check == false then
+        MountTrack:EditBox_Show("Mount: " .. text .. " not found.")
     end
 end
 
