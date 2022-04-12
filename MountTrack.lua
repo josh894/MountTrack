@@ -181,5 +181,8 @@ function MountTrack:Get_Mounts()
             end
         end
     end
+    if #mounts == 0 then
+        mountlist = mountlist .. "List is empty."
+    end
     MountTrack:EditBox_Show(mountlist)
 end
