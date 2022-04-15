@@ -150,7 +150,7 @@ function MountTrack:Get_Mounts()
     --list of mount IDs collected from https://www.wowhead.com/
     --UPDATED: You can now insert mounts by name as shown in the example below (Not Case-Sensitive)
     --if someone is using this other than me, this is the list you change to display different mounts
-    local mounts = {"Blue Proto-Drake", 1332, 1185, 1182, 1203, 1205, 1200, 899, 971, 527}
+    local mounts = {"Blue Proto-Drake", 1332, 1185, 1182, 1203, 1205, 1200, 527}
     local mountlist = "Total Mounts: " .. C_MountJournal.GetNumDisplayedMounts() .. "\n\n"
 
     --goes through entire list of mounts
