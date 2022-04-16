@@ -57,11 +57,12 @@ function MountTrack:ChatCommand(text)
     local mounts = C_MountJournal.GetMountIDs()
     local check = false
     for index=1,#mounts do
-        local name, __, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
+        local name, spell, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
         --sets both to lowercase to remove case sensitivity
         if name:lower() == text:lower() then
             local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
-            local info = name .. ":     " .. source
+            local info = name .. ":     " .. source .. "\n\nhttps://www.wowhead.com/spell=" .. spell .. "/"
+            info = info .. "\n\n ^ Copy this into your browser, and look in comments for additional information."   
             check = true
             MountTrack:EditBox_Show(info)
         end
@@ -151,7 +152,8 @@ function MountTrack:Get_Mounts()
     --UPDATED: You can now insert mounts by name as shown in the example below (Not Case-Sensitive)
     --if someone is using this other than me, this is the list you change to display different mounts
     local mounts = {"Blue Proto-Drake", 1332, 1185, 1182, 1203, 1205, 1200, 527}
-    local mountlist = "Total Mounts: " .. C_MountJournal.GetNumDisplayedMounts() .. "\n\n"
+    local mountlist = "This list can be edited under \\World of Warcraft\\_retail_\\Interface\\AddOns\\MountTrack\\MountTrack.lua\n"
+    mountlist = mountlist .. "Simply edit the list named local mounts at the beginning of the MountTrack:Get_Mounts() function\n\n"
 
     --goes through entire list of mounts
     for index = 1, #mounts do
