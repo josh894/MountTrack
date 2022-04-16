@@ -1,5 +1,6 @@
 # MountTrack
 Personal use World of Warcraft addon to track specific mounts.
+https://www.curseforge.com/wow/addons/mount-track
 
 ## Dependencies
 -   Ace3, LibDBIcon
