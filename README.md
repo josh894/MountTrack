@@ -13,6 +13,9 @@ https://www.curseforge.com/wow/addons/mount-track
 -   Install and unzip into `\World of Warcraft\_retail_\Interface\AddOns`
 -   Once in game, list of mounts can be viewed clicking on the minimap tooltip.
 -   To search the source of a specific mount, type `/mountT mountname` in chat.
+-   Toggle minimap button by typing `/mountT minimap` in chat.
+-   If minimap is disabled, type: `/mountT` in chat to display list.
+-   To view these in game, type `/mountT help` in chat
 
 ## Editing for own-use
 -   In Get_Mounts() the mount table is listed with mount IDs you wish to track.

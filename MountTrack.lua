@@ -21,6 +21,7 @@ MountDB = LibStub("LibDataBroker-1.1"):NewDataObject("MountTrack", {
       tt:AddLine("MountTrack")
       tt:AddLine(" ")
       tt:AddLine("Click to show MountTrack window")
+      tt:AddLine("Type /mountT minimap to toggle minimap")
     end
   })
 
@@ -50,25 +51,41 @@ end
 
 
 function MountTrack:UpdateMinimapButton()
-      LibDBIcon:Show("MountTrack")
+    if (self.db.profile.minimap.hide) then
+        LibDBIcon:Hide("MountTrack")
+        print("MountT: Minimap now hidden.")
+      else
+        LibDBIcon:Show("MountTrack")
+        print("MountT: Minimap now shown.")
+      end
 end
 
 function MountTrack:ChatCommand(text)
     local mounts = C_MountJournal.GetMountIDs()
     local check = false
-    for index=1,#mounts do
-        local name, spell, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
-        --sets both to lowercase to remove case sensitivity
-        if name:lower() == text:lower() then
-            local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
-            local info = name .. ":     " .. source .. "\n\nhttps://www.wowhead.com/spell=" .. spell .. "/"
-            info = info .. "\n\n ^ Copy this into your browser, and look in comments for additional information."   
-            check = true
-            MountTrack:EditBox_Show(info)
+    if text:lower() == "minimap" then
+        self.db.profile.minimap.hide = not self.db.profile.minimap.hide
+        MountTrack:UpdateMinimapButton()
+    elseif text:lower() == "help" then
+            print("Type: `/mountT` for mount list\nType: `/mountT mountname` for searching a mount by name\nType: `/mountT minimap` to toggle minimap ")
+    elseif text == "" then
+        --triggers mountList
+        MountTrack:Get_Mounts()
+    else
+        for index=1,#mounts do
+            local name, spell, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
+            --sets both to lowercase to remove case sensitivity
+            if name:lower() == text:lower() then
+                local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
+                local info = name .. ":     " .. source .. "\n\nhttps://www.wowhead.com/spell=" .. spell .. "/"
+                info = info .. "\n\n ^ Copy this into your browser, and look in comments for additional information."   
+                check = true
+                MountTrack:EditBox_Show(info)
+            end
         end
-    end
-    if check == false then
-        MountTrack:EditBox_Show("Mount: " .. text .. " not found.")
+        if check == false then
+            MountTrack:EditBox_Show("Mount: " .. text .. " not found.")
+        end
     end
 end
 
@@ -151,9 +168,9 @@ function MountTrack:Get_Mounts()
     --list of mount IDs collected from https://www.wowhead.com/
     --UPDATED: You can now insert mounts by name as shown in the example below (Not Case-Sensitive)
     --if someone is using this other than me, this is the list you change to display different mounts
-    local mounts = {"Blue Proto-Drake", 1332, 1185, 1182, 1203, 1205, 1200, 527}
+    local mounts = {}
     --EDIT ABOVE ^
-    
+
     local mountlist = "This list can be edited under \\World of Warcraft\\_retail_\\Interface\\AddOns\\MountTrack\\MountTrack.lua\n"
     mountlist = mountlist .. "Simply edit the list named local mounts at the beginning of the MountTrack:Get_Mounts() function\n\n"
 
@@ -186,7 +203,7 @@ function MountTrack:Get_Mounts()
         end
     end
     if #mounts == 0 then
-        mountlist = mountlist .. "List is empty."
+        mountlist = mountlist .. "List is empty.\nRemember to update your list after updating."
     end
     MountTrack:EditBox_Show(mountlist)
 end
