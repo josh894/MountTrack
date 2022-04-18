@@ -168,6 +168,8 @@ function MountTrack:Get_Mounts()
     --list of mount IDs collected from https://www.wowhead.com/
     --UPDATED: You can now insert mounts by name as shown in the example below (Not Case-Sensitive)
     --if someone is using this other than me, this is the list you change to display different mounts
+    --EXAMPLE BELOW
+    --local mounts = {"Blue Proto-Drake", 1332, 1185, 1182, 1203, 1205, 1200, 527}
     local mounts = {}
     --EDIT ABOVE ^
 
@@ -204,6 +206,7 @@ function MountTrack:Get_Mounts()
     end
     if #mounts == 0 then
         mountlist = mountlist .. "List is empty.\nRemember to update your list after updating."
+        mountlist = mountlist .. "\nExample: local mounts = {\"Blue Proto-Drake\", 1332, 1185, 1182, 1203, 1205, 1200, 527}"
     end
     MountTrack:EditBox_Show(mountlist)
 end

@@ -21,6 +21,7 @@ https://www.curseforge.com/wow/addons/mount-track
 -   In Get_Mounts() the mount table is listed with mount IDs you wish to track.
 -   IDs can be found on the mount's SPELL page on wowhead (Ex. https://www.wowhead.com/spell=288503/umber-nightsaber mount ID = 1203)
 -   Mounts can also be added by name as seen by `Blue Proto-Drake` in table.
+-   Example: local mounts = {"Blue Proto-Drake", 1332, 1185, 1182, 1203, 1205, 1200, 527}
 
 ## IMPORTANT NOTE
 -   After updating addon, list will be overwritten with empty list, save your list externally to update it again easily after update.
