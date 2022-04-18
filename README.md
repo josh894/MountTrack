@@ -3,7 +3,7 @@
 Personal use World of Warcraft addon to track specific mounts. \
 https://www.curseforge.com/wow/addons/mount-track
 
-<img src="images/mountT.png" width="300"/>
+<img src="images/mountT.png" width="400"/>
 
 ## Dependencies
 -   Ace3, LibDBIcon
@@ -18,3 +18,6 @@ https://www.curseforge.com/wow/addons/mount-track
 -   In Get_Mounts() the mount table is listed with mount IDs you wish to track.
 -   IDs can be found on the mount's SPELL page on wowhead (Ex. https://www.wowhead.com/spell=288503/umber-nightsaber mount ID = 1203)
 -   Mounts can also be added by name as seen by `Blue Proto-Drake` in table.
+
+## IMPORTANT NOTE
+-   After updating addon, list will be overwritten with empty list, save your list externally to update it again easily after update.

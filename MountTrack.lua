@@ -13,7 +13,7 @@ MountDB = LibStub("LibDataBroker-1.1"):NewDataObject("MountTrack", {
     type = "data source",
     text = "MountTrack",
     label = "MountTrack",
-    icon = "Interface\\AddOns\\MountTrack\\icon",
+    icon = "Interface\\AddOns\\MountTrack\\images\\icon",
     OnClick = function()
         MountTrack:Get_Mounts()
     end,
@@ -152,6 +152,8 @@ function MountTrack:Get_Mounts()
     --UPDATED: You can now insert mounts by name as shown in the example below (Not Case-Sensitive)
     --if someone is using this other than me, this is the list you change to display different mounts
     local mounts = {"Blue Proto-Drake", 1332, 1185, 1182, 1203, 1205, 1200, 527}
+    --EDIT ABOVE ^
+    
     local mountlist = "This list can be edited under \\World of Warcraft\\_retail_\\Interface\\AddOns\\MountTrack\\MountTrack.lua\n"
     mountlist = mountlist .. "Simply edit the list named local mounts at the beginning of the MountTrack:Get_Mounts() function\n\n"
 
