@@ -18,6 +18,7 @@ https://www.curseforge.com/wow/addons/mount-track
 -   To view these in game, type `/mountT help` in chat
 
 ## Editing for own-use
+-   Due to Blizzard's blocking of file I/O streams, the list must be edited within source code.
 -   In Get_Mounts() the mount table is listed with mount IDs you wish to track.
 -   IDs can be found on the mount's SPELL page on wowhead (Ex. https://www.wowhead.com/spell=288503/umber-nightsaber mount ID = 1203)
 -   Mounts can also be added by name as seen by `Blue Proto-Drake` in table.
