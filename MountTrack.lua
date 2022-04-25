@@ -6,7 +6,7 @@ local _, MountTrack = ...
 
 
 --Initializes addon
-MountTrack = LibStub("AceAddon-3.0"):NewAddon(MountTrack, "Simulationcraft", "AceConsole-3.0", "AceEvent-3.0")
+MountTrack = LibStub("AceAddon-3.0"):NewAddon(MountTrack, "MountTrack", "AceConsole-3.0", "AceEvent-3.0")
 
 --Creates a database for minimap tooltip
 MountDB = LibStub("LibDataBroker-1.1"):NewDataObject("MountTrack", {
@@ -173,8 +173,7 @@ function MountTrack:Get_Mounts()
     local mounts = {}
     --EDIT ABOVE ^
 
-    local mountlist = "This list can be edited under \\World of Warcraft\\_retail_\\Interface\\AddOns\\MountTrack\\MountTrack.lua\n"
-    mountlist = mountlist .. "Simply edit the list named local mounts at the beginning of the MountTrack:Get_Mounts() function\n\n"
+    local mountlist = ""
 
     --goes through entire list of mounts
     for index = 1, #mounts do
@@ -205,6 +204,8 @@ function MountTrack:Get_Mounts()
         end
     end
     if #mounts == 0 then
+        mountlist = mountlist .. "This list can be edited under \\World of Warcraft\\_retail_\\Interface\\AddOns\\MountTrack\\MountTrack.lua\n"
+        mountlist = mountlist .. "Simply edit the list named local mounts at the beginning of the MountTrack:Get_Mounts() function\n\n"
         mountlist = mountlist .. "List is empty.\nRemember to update your list after updating."
         mountlist = mountlist .. "\nExample: local mounts = {\"Blue Proto-Drake\", 1332, 1185, 1182, 1203, 1205, 1200, 527}"
     end
