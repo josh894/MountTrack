@@ -1,8 +1,8 @@
-## Interface: 90200
+## Interface: 90205
 ## Title: MountTrack
 ## Notes: Displays an info box displaying current mounts being hunted.
 ## Author: josh894
-## Version: 9.2.0
+## Version: 9.2.5
 ## OptionalDependencies: Ace3, LibDBIcon
 ## SavedVariables: MountTrackDB
 
