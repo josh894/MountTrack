@@ -4,7 +4,6 @@ local _, MountTrack = ...
 --Huge help from LibStub and Ace-3.0 Libraries
 --Meant for personal use, but feel free to use if you don't mind manually changing the mount table!
 
-
 --Initializes addon
 MountTrack = LibStub("AceAddon-3.0"):NewAddon(MountTrack, "MountTrack", "AceConsole-3.0", "AceEvent-3.0")
 
@@ -49,7 +48,7 @@ function MountTrack:OnInitialize()
     MountTrack:UpdateMinimapButton()
 end
 
-
+--allows for minimap button to be hidden by user
 function MountTrack:UpdateMinimapButton()
     if (self.db.profile.minimap.hide) then
         LibDBIcon:Hide("MountTrack")
@@ -61,7 +60,6 @@ function MountTrack:UpdateMinimapButton()
 end
 
 function MountTrack:ChatCommand(text)
-    local mounts = C_MountJournal.GetMountIDs()
     local check = false
     if text:lower() == "minimap" then
         self.db.profile.minimap.hide = not self.db.profile.minimap.hide
@@ -72,20 +70,9 @@ function MountTrack:ChatCommand(text)
         --triggers mountList
         MountTrack:Get_Mounts()
     else
-        for index=1,#mounts do
-            local name, spell, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
-            --sets both to lowercase to remove case sensitivity
-            if name:lower() == text:lower() then
-                local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
-                local info = name .. ":     " .. source .. "\n\nhttps://www.wowhead.com/spell=" .. spell .. "/"
-                info = info .. "\n\n ^ Copy this into your browser, and look in comments for additional information."   
-                check = true
-                MountTrack:EditBox_Show(info)
-            end
-        end
-        if check == false then
-            MountTrack:EditBox_Show("Mount: " .. text .. " not found.")
-        end
+        --provides wowhead link to retrieve data on mount 
+        --use for spell ID, item ID, etc.
+        MountTrack:Get_Mount_Data(text)
     end
 end
 
@@ -210,4 +197,25 @@ function MountTrack:Get_Mounts()
         mountlist = mountlist .. "\nExample: local mounts = {\"Blue Proto-Drake\", 1332, 1185, 1182, 1203, 1205, 1200, 527}"
     end
     MountTrack:EditBox_Show(mountlist)
+end
+
+--Function that allows for mount data to be collected from wowhead before mount is searchable
+function MountTrack:Get_Mount_Data(text)
+    local mounts = C_MountJournal.GetMountIDs()
+    for index=1,#mounts do
+        local name, spell, __, __, __, __, __, __, __, __, __, __ = C_MountJournal.GetMountInfoByID(mounts[index]) 
+        --sets both to lowercase to remove case sensitivity
+        if name:lower() == text:lower() then
+            local  __,  __, source,  __,  __,  __,  __,  __,  __ = C_MountJournal.GetMountInfoExtraByID(mounts[index])
+            local info = name .. ":     " .. source .. "\n\nhttps://www.wowhead.com/spell=" .. spell .. "/"
+            --manually creates wowhead link through spell ID
+            info = info .. "\n\n ^ Copy this into your browser, and look in comments for additional information."   
+            check = true
+            MountTrack:EditBox_Show(info)
+        end
+    end
+    --if mount is not in retail patch/never existed
+    if check == false then
+        MountTrack:EditBox_Show("Mount: " .. text .. " not found.")
+    end
 end
