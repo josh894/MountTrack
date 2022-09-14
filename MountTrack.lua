@@ -218,5 +218,4 @@ function MountTrack:Get_Mount_Data(text)
     if check == false then
         MountTrack:EditBox_Show("Mount: " .. text .. " not found.")
     end
-    --test
 end
